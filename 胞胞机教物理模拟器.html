@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>完整量子元胞自动机可视化</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+        canvas {
+            border: 1px solid black;
+            margin-top: 20px;
+            cursor: crosshair;
+        }
+        #controls {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+        button, select {
+            padding: 10px 20px;
+            margin: 0 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1>完整量子元胞自动机可视化</h1>
+    <canvas id="canvas" width="500" height="500"></canvas>
+    <div id="controls">
+        <button id="stepButton">一步演化</button>
+        <button id="resetButton">重置</button>
+        <label for="fieldSelect">选择可视化的量子场：</label>
+        <select id="fieldSelect">
+            <option value="ElectX">电磁场 X 分量 (ElectX)</option>
+            <option value="ElectY">电磁场 Y 分量 (ElectY)</option>
+            <option value="B">磁场 B 分量</option>
+            <option value="higgs">希格斯场 (Higgs)</option>
+            <option value="WeakWplus">弱相互作用 W⁺ (WeakWplus)</option>
+            <option value="WeakWminus">弱相互作用 W⁻ (WeakWminus)</option>
+            <option value="WeakZ">弱相互作用 Z (WeakZ)</option>
+            <option value="Gluon1">强相互作用胶子 Gluon1</option>
+            <option value="Gluon2">强相互作用胶子 Gluon2</option>
+            <!-- 可以继续添加 Gluon3 到 Gluon8 -->
+        </select>
+    </div>
+    <script>
+        // 定义量子场的结构
+        class QuantumFields {
+            constructor() {
+                // 电磁场
+                this.ElectX = 0;  // 电磁场的 X 分量
+                this.ElectY = 0;  // 电磁场的 Y 分量
+                this.B = 0;       // 磁场的 Z 分量
+
+                // 希格斯场
+                this.higgs = 0;      // 当前时间步的希格斯场值
+                this.higgsPrev = 0;  // 前一个时间步的希格斯场值
+
+                // 弱相互作用场
+                this.WeakWplus = 0;
+                this.WeakWminus = 0;
+                this.WeakZ = 0;
+
+                // 强相互作用场（8个胶子场）
+                this.Gluon = [];
+                for (let i = 0; i < 8; i++) {
+                    this.Gluon[i] = 0;
+                }
+            }
+        }
+
+        // 设置常量
+        const GRID_SIZE = 50;            // 网格大小
+        const DELTA_TIME = 0.2;          // 时间步长，减小以提高稳定性
+        const DELTA_SPACE = 1.0;         // 空间步长
+        const MASS_HIGGS = 0.5;          // 希格斯场的质量项（简化值）
+        const CANVAS_SIZE = 500;         // 画布大小
+        const CELL_SIZE = CANVAS_SIZE / GRID_SIZE;
+        const DAMPING_Electromagnetic = 0.99; // 电磁场阻尼
+        const DAMPING_Higgs = 0.99;           // 希格斯场阻尼
+        const DAMPING_Weak = 0.95;            // 弱相互作用场阻尼
+        const DAMPING_Gluon = 0.90;           // 强相互作用场阻尼
+        const PERTURBATION = 0.5;            // 扰动的强度
+
+        // 初始化网格
+        function initializeGrid() {
+            let grid = [];
+            for (let i = 0; i < GRID_SIZE; i++) {
+                let row = [];
+                for (let j = 0; j < GRID_SIZE; j++) {
+                    row.push(new QuantumFields());
+                }
+                grid.push(row);
+            }
+            // 设置中心元胞的初始条件
+            let center = Math.floor(GRID_SIZE / 2);
+            grid[center][center].ElectX = 1;
+            grid[center][center].ElectY = 1;
+            grid[center][center].B = 1;
+            grid[center][center].higgs = 1;
+            grid[center][center].higgsPrev = 1;
+            grid[center][center].WeakWplus = 1;
+            grid[center][center].WeakWminus = 1;
+            grid[center][center].WeakZ = 1;
+            grid[center][center].Gluon[0] = 1;
+            grid[center][center].Gluon[1] = 1;
+            // 可以继续设置 Gluon3 到 Gluon8
+            return grid;
+        }
+
+        // 更新电磁场
+        function updateElectromagneticField(grid, x, y, tempGrid) {
+            let cell = grid[x][y];
+            // 边界处理（简单周期边界）
+            let xp = (x + 1) % GRID_SIZE;
+            let xm = (x - 1 + GRID_SIZE) % GRID_SIZE;
+            let yp = (y + 1) % GRID_SIZE;
+            let ym = (y - 1 + GRID_SIZE) % GRID_SIZE;
+
+            // 计算偏导数（有限差分）
+            let dB_dy = (grid[x][yp].B - grid[x][ym].B) / (2 * DELTA_SPACE);
+            let dB_dx = (grid[xp][y].B - grid[xm][y].B) / (2 * DELTA_SPACE);
+
+            let newEx = cell.ElectX + DELTA_TIME * dB_dy;
+            let newEy = cell.ElectY - DELTA_TIME * dB_dx;
+
+            let dEx_dy = (grid[xp][y].ElectX - grid[xm][y].ElectX) / (2 * DELTA_SPACE);
+            let dEy_dx = (grid[x][yp].ElectY - grid[x][ym].ElectY) / (2 * DELTA_SPACE);
+
+            let newB = cell.B - DELTA_TIME * (dEx_dy - dEy_dx);
+
+            // 应用阻尼
+            newEx *= DAMPING_Electromagnetic;
+            newEy *= DAMPING_Electromagnetic;
+            newB *= DAMPING_Electromagnetic;
+
+            // 更新电磁场到临时网格
+            tempGrid[x][y].ElectX = newEx;
+            tempGrid[x][y].ElectY = newEy;
+            tempGrid[x][y].B = newB;
+        }
+
+        // 更新希格斯场
+        function updateHiggsField(grid, x, y, tempGrid) {
+            let cell = grid[x][y];
+            // 边界处理（简单周期边界）
+            let xp = (x + 1) % GRID_SIZE;
+            let xm = (x - 1 + GRID_SIZE) % GRID_SIZE;
+            let yp = (y + 1) % GRID_SIZE;
+            let ym = (y - 1 + GRID_SIZE) % GRID_SIZE;
+
+            // 计算拉普拉斯算子
+            let laplacianHiggs = (grid[xp][y].higgs + grid[xm][y].higgs + grid[x][yp].higgs + grid[x][ym].higgs - 4 * cell.higgs) / (DELTA_SPACE * DELTA_SPACE);
+
+            // 克莱因-戈登方程离散化
+            let higgsNext = 2 * cell.higgs - cell.higgsPrev + DELTA_TIME * DELTA_TIME * (laplacianHiggs - MASS_HIGGS * MASS_HIGGS * cell.higgs);
+
+            // 应用阻尼
+            higgsNext *= DAMPING_Higgs;
+
+            // 更新希格斯场到临时网格
+            tempGrid[x][y].higgsPrev = cell.higgs;
+            tempGrid[x][y].higgs = higgsNext;
+        }
+
+        // 更新弱相互作用场
+        function updateWeakFields(grid, x, y, tempGrid) {
+            let cell = grid[x][y];
+
+            // 改进的相互作用规则，加入与电磁场和希格斯场的耦合
+            let newWeakWplus = cell.WeakWplus + DELTA_TIME * (cell.WeakWminus - cell.WeakZ + 0.1 * cell.ElectX);
+            let newWeakWminus = cell.WeakWminus + DELTA_TIME * (cell.WeakWplus - cell.WeakZ + 0.1 * cell.ElectY);
+            let newWeakZ = cell.WeakZ + DELTA_TIME * (cell.WeakWplus - cell.WeakWminus + 0.05 * cell.higgs);
+
+            // 应用阻尼
+            newWeakWplus *= DAMPING_Weak;
+            newWeakWminus *= DAMPING_Weak;
+            newWeakZ *= DAMPING_Weak;
+
+            // 更新弱相互作用场到临时网格
+            tempGrid[x][y].WeakWplus = newWeakWplus;
+            tempGrid[x][y].WeakWminus = newWeakWminus;
+            tempGrid[x][y].WeakZ = newWeakZ;
+
+            // 调试输出
+            // console.log(`Weak at (${x}, ${y}): Wplus=${newWeakWplus}, Wminus=${newWeakWminus}, Z=${newWeakZ}`);
+        }
+
+        // 更新强相互作用场
+        function updateGluonFields(grid, x, y, tempGrid) {
+            let cell = grid[x][y];
+            for (let i = 0; i < 8; i++) {
+                // 改进的相互作用规则，加入与弱相互作用场的耦合
+                let neighbor = (i + 1) % 8;
+                let interaction = 0.05 * (cell.WeakWplus - cell.WeakWminus); // 示例：与弱相互作用场耦合
+                let newGluon = cell.Gluon[i] + DELTA_TIME * (cell.Gluon[neighbor] - cell.Gluon[i]) + interaction;
+
+                // 应用阻尼
+                newGluon *= DAMPING_Gluon;
+
+                // 更新胶子场到临时网格
+                tempGrid[x][y].Gluon[i] = newGluon;
+
+                // 调试输出
+                // console.log(`Gluon${i+1} at (${x}, ${y}): ${newGluon}`);
+            }
+        }
+
+        // 更新所有量子场
+        function updateQuantumFields(grid) {
+            // 创建一个临时网格存储更新后的值，以避免更新时相互影响
+            let tempGrid = [];
+            for (let i = 0; i < GRID_SIZE; i++) {
+                let row = [];
+                for (let j = 0; j < GRID_SIZE; j++) {
+                    row.push(new QuantumFields());
+                }
+                tempGrid.push(row);
+            }
+
+            // 更新所有元胞
+            for (let i = 0; i < GRID_SIZE; i++) {
+                for (let j = 0; j < GRID_SIZE; j++) {
+                    updateElectromagneticField(grid, i, j, tempGrid);
+                    updateHiggsField(grid, i, j, tempGrid);
+                    updateWeakFields(grid, i, j, tempGrid);
+                    updateGluonFields(grid, i, j, tempGrid);
+                }
+            }
+
+            // 将更新后的临时网格复制回主网格
+            for (let i = 0; i < GRID_SIZE; i++) {
+                for (let j = 0; j < GRID_SIZE; j++) {
+                    grid[i][j].ElectX = tempGrid[i][j].ElectX;
+                    grid[i][j].ElectY = tempGrid[i][j].ElectY;
+                    grid[i][j].B = tempGrid[i][j].B;
+                    grid[i][j].higgs = tempGrid[i][j].higgs;
+                    grid[i][j].higgsPrev = tempGrid[i][j].higgsPrev;
+                    grid[i][j].WeakWplus = tempGrid[i][j].WeakWplus;
+                    grid[i][j].WeakWminus = tempGrid[i][j].WeakWminus;
+                    grid[i][j].WeakZ = tempGrid[i][j].WeakZ;
+                    for (let k = 0; k < 8; k++) {
+                        grid[i][j].Gluon[k] = tempGrid[i][j].Gluon[k];
+                    }
+                }
+            }
+        }
+
+        // 渲染网格到画布
+        function renderGrid(grid, ctx, selectedField) {
+            // 清空画布
+            ctx.clearRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
+
+            for (let i = 0; i < GRID_SIZE; i++) {
+                for (let j = 0; j < GRID_SIZE; j++) {
+                    let cell = grid[i][j];
+
+                    let value = 0;
+                    let color = 'black';
+
+                    switch (selectedField) {
+                        case 'ElectX':
+                            value = cell.ElectX;
+                            color = `rgb(${clamp(((value + 1) / 2) * 255, 0, 255)}, 0, 0)`; // 红色
+                            break;
+                        case 'ElectY':
+                            value = cell.ElectY;
+                            color = `rgb(0, ${clamp(((value + 1) / 2) * 255, 0, 255)}, 0)`; // 绿色
+                            break;
+                        case 'B':
+                            value = cell.B;
+                            color = `rgb(0, 0, ${clamp(((value + 1) / 2) * 255, 0, 255)})`; // 蓝色
+                            break;
+                        case 'higgs':
+                            value = cell.higgs;
+                            color = `rgb(${clamp(((value + 1) / 2) * 255, 0, 255)}, ${clamp(((value + 1) / 2) * 255, 0, 255)}, ${clamp(((value + 1) / 2) * 255, 0, 255)})`; // 灰度
+                            break;
+                        case 'WeakWplus':
+                            value = cell.WeakWplus;
+                            color = `rgb(${clamp(((value + 1) / 2) * 255, 0, 255)}, ${clamp(((value + 1) / 2) * 255, 0, 255)}, 0)`; // 黄色
+                            break;
+                        case 'WeakWminus':
+                            value = cell.WeakWminus;
+                            color = `rgb(0, ${clamp(((value + 1) / 2) * 255, 0, 255)}, ${clamp(((value + 1) / 2) * 255, 0, 255)})`; // 青绿色
+                            break;
+                        case 'WeakZ':
+                            value = cell.WeakZ;
+                            color = `rgb(${clamp(((value + 1) / 2) * 255, 0, 255)}, 0, ${clamp(((value + 1) / 2) * 255, 0, 255)})`; // 紫色
+                            break;
+                        case 'Gluon1':
+                            value = cell.Gluon[0];
+                            color = `rgb(${clamp(((value + 1) / 2) * 255, 0, 255)}, ${clamp(((value + 1) / 2) * 255, 0, 255)}, 0)`; // 黄色
+                            break;
+                        case 'Gluon2':
+                            value = cell.Gluon[1];
+                            color = `rgb(0, ${clamp(((value + 1) / 2) * 255, 0, 255)}, ${clamp(((value + 1) / 2) * 255, 0, 255)})`; // 青绿色
+                            break;
+                        // 可以继续为 Gluon3 到 Gluon8 添加case
+                        default:
+                            color = 'black';
+                    }
+
+                    // 设置填充颜色
+                    ctx.fillStyle = color;
+                    ctx.fillRect(i * CELL_SIZE, j * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+                }
+            }
+        }
+
+        // 辅助函数：限制数值在指定范围内
+        function clamp(value, min, max) {
+            return Math.max(min, Math.min(max, value));
+        }
+
+        // 渲染网格和更新单步
+        function stepSimulation(grid, ctx, selectedField) {
+            updateQuantumFields(grid);
+            renderGrid(grid, ctx, selectedField);
+        }
+
+        // 添加扰动到指定网格位置
+        function addPerturbation(grid, x, y) {
+            if (x >= 0 && x < GRID_SIZE && y >= 0 && y < GRID_SIZE) {
+                grid[x][y].ElectX += PERTURBATION;
+                grid[x][y].ElectY += PERTURBATION;
+                grid[x][y].B += PERTURBATION;
+                grid[x][y].higgs += PERTURBATION;
+                grid[x][y].higgsPrev += PERTURBATION;
+                grid[x][y].WeakWplus += PERTURBATION;
+                grid[x][y].WeakWminus += PERTURBATION;
+                grid[x][y].WeakZ += PERTURBATION;
+                for (let k = 0; k < 8; k++) {
+                    grid[x][y].Gluon[k] += PERTURBATION;
+                }
+            }
+        }
+
+        // 控制模拟的开始、暂停和重置
+        window.onload = function() {
+            let canvas = document.getElementById('canvas');
+            let ctx = canvas.getContext('2d');
+
+            // 创建量子场网格
+            let grid = initializeGrid();
+
+            // 获取选择的量子场
+            let fieldSelect = document.getElementById('fieldSelect');
+            let selectedField = fieldSelect.value;
+
+            // 渲染初始状态
+            renderGrid(grid, ctx, selectedField);
+
+            // 按钮事件
+            document.getElementById('stepButton').onclick = function() {
+                stepSimulation(grid, ctx, selectedField);
+            };
+
+            document.getElementById('resetButton').onclick = function() {
+                grid = initializeGrid();
+                renderGrid(grid, ctx, selectedField);
+            };
+
+            // 选择量子场变化时重新渲染
+            fieldSelect.onchange = function() {
+                selectedField = fieldSelect.value;
+                renderGrid(grid, ctx, selectedField);
+            };
+
+            // 鼠标点击添加扰动
+            canvas.addEventListener('click', function(event) {
+                // 获取画布相对于页面的位置
+                let rect = canvas.getBoundingClientRect();
+                let x = event.clientX - rect.left;
+                let y = event.clientY - rect.top;
+
+                // 计算对应的网格坐标
+                let gridX = Math.floor(x / CELL_SIZE);
+                let gridY = Math.floor(y / CELL_SIZE);
+
+                // 添加扰动
+                addPerturbation(grid, gridX, gridY);
+
+                // 重新渲染
+                renderGrid(grid, ctx, selectedField);
+            });
+        };
+    </script>
+</body>
+</html>
