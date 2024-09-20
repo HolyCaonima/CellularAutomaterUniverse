@@ -190,6 +190,7 @@ $$V(\phi(n)) = \mu^2 \phi^2(n) + \lambda \phi^4(n)$$
   其中 $\mu^2 < 0$ 实现自发对称性破缺。
 
 - **规范场质量项**：
+
 $$\mathcal{L}_{\text{mass}} = \frac{1}{2} g^2 v^2 A_\mu(n) A^\mu(n)$$
 
   其中 $v$ 是希格斯场的真空期望值。
