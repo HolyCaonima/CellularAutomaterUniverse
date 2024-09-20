@@ -127,15 +127,12 @@ $$g_{\mu\nu}(n + \delta t) = g_{\mu\nu}(n) - 2\delta t \cdot (R_{\mu\nu}(n) - \f
 
   - **差分形式**：
 
-    $$  i \gamma^\mu \Delta_\mu \psi(n) - m \psi(n) = 0
-    $$
+$$i \gamma^\mu \Delta_\mu \psi(n) - m \psi(n) = 0$$
 
 - **避免费米子倍增问题**：采用 **Wilson 项** 或 **Kogut-Susskind 费米子** 方法。
 
   - **Wilson 项**：
-
-    $$  S_W = -\frac{r}{2a} \sum_n \sum_\mu \bar{\psi}(n)(\psi(n+\hat{\mu}) - 2\psi(n) + \psi(n-\hat{\mu}))
-    $$
+$$S_W = -\frac{r}{2a} \sum_n \sum_\mu \bar{\psi}(n)(\psi(n+\hat{\mu}) - 2\psi(n) + \psi(n-\hat{\mu}))$$
 
     其中 $r$ 是 Wilson 参数，通常取 $r=1$。
 
@@ -151,28 +148,20 @@ $$\psi(n + \delta t) = \psi(n) + \delta t \cdot \left( i \gamma^\mu \Delta_\mu \
 - **费米子与规范场的耦合**：
 
   - **相互作用项**：
-
-    $$  \mathcal{L}_{\text{int}} = g \bar{\psi}(n) \gamma^\mu A_\mu(n) \psi(n)
-    $$
+$$\mathcal{L}_{\text{int}} = g \bar{\psi}(n) \gamma^\mu A_\mu(n) \psi(n)$$
 
   - **更新规则中包含相互作用项**：
-
-    $$  \psi(n + \delta t) = \psi(n) + \delta t \cdot \left( i \gamma^\mu (\Delta_\mu - ig A_\mu(n)) \psi(n) - m \psi(n) \right)
-    $$
+$$\psi(n + \delta t) = \psi(n) + \delta t \cdot \left( i \gamma^\mu (\Delta_\mu - ig A_\mu(n)) \psi(n) - m \psi(n) \right)$$
 
 ### 4.2 引力与物质场的耦合
 
 - **能动张量的计算**：
 
   - **对于标量场**：
-
-    $$  T_{\mu\nu}^{\phi}(n) = \Delta_\mu \phi(n) \Delta_\nu \phi(n) - g_{\mu\nu}(n) \left( \frac{1}{2} g^{\alpha\beta}(n) \Delta_\alpha \phi(n) \Delta_\beta \phi(n) - V(\phi(n)) \right)
-    $$
+$$T_{\mu\nu}^{\phi}(n) = \Delta_\mu \phi(n) \Delta_\nu \phi(n) - g_{\mu\nu}(n) \left( \frac{1}{2} g^{\alpha\beta}(n) \Delta_\alpha \phi(n) \Delta_\beta \phi(n) - V(\phi(n)) \right)$$
 
   - **对于费米子场**：
-
-    $$  T_{\mu\nu}^{\psi}(n) = \frac{i}{2} \left( \bar{\psi}(n) \gamma_{(\mu} \Delta_{\nu)} \psi(n) - \Delta_{(\nu} \bar{\psi}(n) \gamma_{\mu)} \psi(n) \right)
-    $$
+$$T_{\mu\nu}^{\psi}(n) = \frac{i}{2} \left( \bar{\psi}(n) \gamma_{(\mu} \Delta_{\nu)} \psi(n) - \Delta_{(\nu} \bar{\psi}(n) \gamma_{\mu)} \psi(n) \right)$$
 
 - **总能动张量**：
 $$T_{\mu\nu}(n) = T_{\mu\nu}^{\phi}(n) + T_{\mu\nu}^{\psi}(n) + T_{\mu\nu}^{\text{EM}}(n) + T_{\mu\nu}^{\text{Gauge}}(n)$$
@@ -206,28 +195,20 @@ $$\mathcal{L}_{\text{mass}} = \frac{1}{2} g^2 v^2 A_\mu(n) A^\mu(n)$$
 - **采用线性化引力理论**：
 
   - **引力场方程的线性化**：
-
-    $$  \Box h_{\mu\nu}(n) = -16\pi G \left( T_{\mu\nu}(n) - \frac{1}{2} g_{\mu\nu}(n) T^\alpha_\alpha(n) \right)
-    $$
+$$\Box h_{\mu\nu}(n) = -16\pi G \left( T_{\mu\nu}(n) - \frac{1}{2} g_{\mu\nu}(n) T^\alpha_\alpha(n) \right)$$
 
   - **波动方程的离散化**：
-
-    $$  \frac{h_{\mu\nu}(n + \delta t) - 2 h_{\mu\nu}(n) + h_{\mu\nu}(n - \delta t)}{(\delta t)^2} - \sum_{i=x,y,z} \frac{h_{\mu\nu}(n + \delta x_i) - 2 h_{\mu\nu}(n) + h_{\mu\nu}(n - \delta x_i)}{(\delta x)^2} = \text{源项}
-    $$
+$$\frac{h_{\mu\nu}(n + \delta t) - 2 h_{\mu\nu}(n) + h_{\mu\nu}(n - \delta t)}{(\delta t)^2} - \sum_{i=x,y,z} \frac{h_{\mu\nu}(n + \delta x_i) - 2 h_{\mu\nu}(n) + h_{\mu\nu}(n - \delta x_i)}{(\delta x)^2} = \text{源项}$$
 
 ### 5.3 引力场的量子化
 
 - **采用路径积分方法**：
 
   - **引力场的配分函数**：
-
-    $$  Z = \int \mathcal{D}h_{\mu\nu} \exp\left( i S_G[h_{\mu\nu}] \right)
-    $$
+$$Z = \int \mathcal{D}h_{\mu\nu} \exp\left( i S_G[h_{\mu\nu}] \right)$$
 
   - **引力场的作用量**：
-
-    $$  S_G = \sum_n \left( -\frac{1}{2} h^{\mu\nu}(n) \Box h_{\mu\nu}(n) + 16\pi G h^{\mu\nu}(n) T_{\mu\nu}(n) \right) \delta V
-    $$
+$$S_G = \sum_n \left( -\frac{1}{2} h^{\mu\nu}(n) \Box h_{\mu\nu}(n) + 16\pi G h^{\mu\nu}(n) T_{\mu\nu}(n) \right) \delta V$$
 
 - **障碍**：由于引力的非线性和规范自由度，直接量子化引力场存在困难。
 
@@ -248,18 +229,13 @@ $$\mathcal{L}_{\text{mass}} = \frac{1}{2} g^2 v^2 A_\mu(n) A^\mu(n)$$
 
 面积和体积。
 
-  - **自旋网络的数学表示**：
-    
-    $$  |\Psi\rangle = \sum_{\{j_e, i_n\}} c_{\{j_e, i_n\}} |j_e, i_n\rangle
-    $$  
+  - **自旋网络的数学表示**：$$|\Psi\rangle = \sum_{\{j_e, i_n\}} c_{\{j_e, i_n\}} |j_e, i_n\rangle$$
     其中 $j_e$ 表示边的自旋标记，$i_n$ 表示节点的交叉子。
 
 - **更新规则**：根据自旋网络的演化规则，更新格点和链接变量的状态。
 
   - **顶点振幅**：
-  
-    $$  A_v = \sum_{j_f} \prod_f (2j_f + 1) \{15j\}
-    $$  
+  $$A_v = \sum_{j_f} \prod_f (2j_f + 1) \{15j\}$$
     其中 $\{15j\}$ 是 15j 符号，描述了五个四面体的耦合。
 
 ---
@@ -335,10 +311,7 @@ $$\frac{\partial \text{Field}}{\partial n} = 0 \quad \text{at boundary}$$
 
 - **解决方案**：
   - 采用尺度缩放，模拟较大的格点间距，同时保持物理规律的一致性。
-  - 定义重整化群变换：
-    
-    $$  R: \text{Fine Grid} \to \text{Coarse Grid}
-    $$
+  - 定义重整化群变换：$$R: \text{Fine Grid} \to \text{Coarse Grid}$$
 
   - 保持关键物理量在不同尺度下的不变性。
 
@@ -348,10 +321,7 @@ $$\frac{\partial \text{Field}}{\partial n} = 0 \quad \text{at boundary}$$
 
 - **解决方案**：
   - 采用 **Kähler-Dirac 费米子** 或 **域墙费米子** 方法。
-  - Kähler-Dirac 方程：
-    
-    $$  (d + d^\dagger) \psi = m \psi
-    $$  
+  - Kähler-Dirac 方程：$$(d + d^\dagger) \psi = m \psi$$
     其中 $d$ 是外微分算子的离散版本。
 
 ### 8.3 引力的量子化困难
@@ -360,10 +330,7 @@ $$\frac{\partial \text{Field}}{\partial n} = 0 \quad \text{at boundary}$$
 
 - **解决方案**：
   - 采用圈量子引力的思想，引入自旋网络和自旋泡沫。
-  - 定义量子几何算子，如面积算子：
-    
-    $$  \hat{A} = 8\pi \gamma l_P^2 \sqrt{\hat{J}^2}
-    $$  
+  - 定义量子几何算子，如面积算子：$$\hat{A} = 8\pi \gamma l_P^2 \sqrt{\hat{J}^2}$$
     其中 $\gamma$ 是 Immirzi 参数，$\hat{J}^2$ 是角动量算子。
 
 ### 8.4 洛伦兹不变性的保持
@@ -372,14 +339,8 @@ $$\frac{\partial \text{Field}}{\partial n} = 0 \quad \text{at boundary}$$
 
 - **解决方案**：
   - 通过构造对称的格点结构和在连续极限下恢复洛伦兹不变性。
-  - 定义离散版本的 Lorentz 生成元：
-    
-    $$  L_{\mu\nu} = n_\mu \partial_\nu - n_\nu \partial_\mu
-    $$  
-  - 验证在连续极限下：
-    
-    $$  \lim_{\delta x \to 0} [L_{\mu\nu}, \text{Field}] = \text{标准 Lorentz 变换}
-    $$
+  - 定义离散版本的 Lorentz 生成元：$$L_{\mu\nu} = n_\mu \partial_\nu - n_\nu \partial_\mu$$
+  - 验证在连续极限下：$$\lim_{\delta x \to 0} [L_{\mu\nu}, \text{Field}] = \text{标准 Lorentz 变换}$$
 
 ---
 
@@ -410,10 +371,7 @@ $$\langle O \rangle = \frac{1}{Z} \int \mathcal{D}\phi \mathcal{D}A \mathcal{D}\
 
 - **蒙特卡洛模拟**：采用数值方法模拟场的演化。
 
-  - Metropolis 算法：
-    
-    $$  P(\text{accept}) = \min(1, e^{-\Delta S})
-    $$
+  - Metropolis 算法：$$P(\text{accept}) = \min(1, e^{-\Delta S})$$
 
 ---
 
@@ -425,21 +383,12 @@ $$\langle O \rangle = \frac{1}{Z} \int \mathcal{D}\phi \mathcal{D}A \mathcal{D}\
 
 - **多尺度建模**：在不同的尺度上采用不同的模型，结合微观和宏观的物理现象。
 
-  - 定义尺度相关的有效理论：
-    
-    $$  S_{\text{eff}}[\phi_{\text{low}}] = -\ln \int \mathcal{D}\phi_{\text{high}} \, e^{-S[\phi_{\text{low}}, \phi_{\text{high}}]}
-    $$
+  - 定义尺度相关的有效理论：$$S_{\text{eff}}[\phi_{\text{low}}] = -\ln \int \mathcal{D}\phi_{\text{high}} \, e^{-S[\phi_{\text{low}}, \phi_{\text{high}}]}$$
 
 - **与实验的联系**：寻找模型的可观测预言，如对宇宙学常数、引力波或高能物理实验的影响。
 
-  - 预测暗能量密度：
-    
-    $$  \rho_{\Lambda} = \frac{\Lambda}{8\pi G}
-    $$  
-  - 引力波频谱：
-    
-    $$  h(f) = A \cdot f^{-7/6} \cdot \exp(i\Psi(f))
-    $$
+  - 预测暗能量密度：$$\rho_{\Lambda} = \frac{\Lambda}{8\pi G}$$
+  - 引力波频谱：$$h(f) = A \cdot f^{-7/6} \cdot \exp(i\Psi(f))$$
 
 ---
 
