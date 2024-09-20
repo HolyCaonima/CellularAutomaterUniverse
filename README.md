@@ -122,12 +122,15 @@ $$U_\mu(n) \rightarrow U_\mu(n) \exp\left(-i \delta t \sum_a F_{\mu\nu}^a(n) T^a
 - **离散的爱因斯坦场方程**：
 $$G_{\mu\nu}(n) = 8\pi G T_{\mu\nu}(n)$$
 
-  其中 $G_{\mu\nu}(n)$ 是离散的爱因斯坦张量，$T_{\mu\nu}(n)$ 是能动张量。
+  其中
+  $G_{\mu\nu}(n)$ 是离散的爱因斯坦张量，
+  $T_{\mu\nu}(n)$ 是能动张量。
 
 - **爱因斯坦张量的离散化**：使用有限差分法计算曲率。
 $$R_{\mu\nu}(n) = \frac{1}{2} \sum_{\lambda} [\Delta_\lambda \Gamma^\lambda_{\mu\nu}(n) - \Delta_\nu \Gamma^\lambda_{\mu\lambda}(n) + \Gamma^\lambda_{\lambda\rho}(n)\Gamma^\rho_{\mu\nu}(n) - \Gamma^\lambda_{\nu\rho}(n)\Gamma^\rho_{\mu\lambda}(n)]$$
 
-  其中 $\Gamma^\lambda_{\mu\nu}(n)$ 是离散的克里斯托弗符号。
+  其中
+  $\Gamma^\lambda_{\mu\nu}(n)$ 是离散的克里斯托弗符号。
 
 - **度规的更新规则**：
 $$g_{\mu\nu}(n + \delta t) = g_{\mu\nu}(n) - 2\delta t \cdot (R_{\mu\nu}(n) - \frac{1}{2}g_{\mu\nu}(n)R(n) - 8\pi G T_{\mu\nu}(n))$$
@@ -160,7 +163,6 @@ $$\psi(n + \delta t) = \psi(n) + \delta t \cdot \left( i \gamma^\mu \Delta_\mu \
 
   - **相互作用项**：
 $$\mathcal{L}_{\text{int}} = g \bar{\psi}(n) \gamma^\mu A_\mu(n) \psi(n)$$
-
   - **更新规则中包含相互作用项**：
 $$\psi(n + \delta t) = \psi(n) + \delta t \cdot \left( i \gamma^\mu (\Delta_\mu - ig A_\mu(n)) \psi(n) - m \psi(n) \right)$$
 
