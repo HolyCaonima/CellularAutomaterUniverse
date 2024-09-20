@@ -267,9 +267,11 @@ $i_n$ 表示节点的交叉子。
 $SU(5)$ 或
 $SO(10)$，统一弱、强和电磁相互作用。
 
-- **大统一理论的拉格朗日量**：$$\L_{GUT} = -\frac{1}{4} F_{\mu\nu}^a F^{a\mu\nu} + i\bar{\psi} \gamma^\mu D_\mu \psi + (D_\mu \phi)^\dagger (D^\mu \phi) - V(\phi)$$
+- **大统一理论的拉格朗日量**：
+$$L_{GUT} = -\frac{1}{4} F_{\mu\nu}^a F^{a\mu\nu} + i\bar{\psi} \gamma^\mu D_\mu \psi + (D_\mu \phi)^\dagger (D^\mu \phi) - V(\phi)$$
 
-  其中 $F_{\mu\nu}^a$ 是统一规范场的场强张量，$D_\mu$ 是协变导数。
+  其中 $F_{\mu\nu}^a$ 是统一规范场的场强张量，
+  $D_\mu$ 是协变导数。
 
 - **引力的引入**：将引力视为几何效应，与规范相互作用不同。
 
@@ -296,7 +298,8 @@ $$\lim_{\delta x, \delta t \to 0} \text{离散动作} = \text{连续动作}$$
 - **更新函数**：定义一个通用的更新函数：
 $$\text{State}(n + \delta t) = f(\text{State}(n), \text{Neighbors}(n))$$
 
-  其中 $\text{State}(n)$ 表示格点 $n$ 的状态，$\text{Neighbors}(n)$ 表示邻近格点的状态。
+  其中 $\text{State}(n)$ 表示格点 $n$ 的状态，
+  $\text{Neighbors}(n)$ 表示邻近格点的状态。
 
 - **并行计算**：利用并行算法，加速计算过程。
 
@@ -341,7 +344,8 @@ $$\frac{\partial \text{Field}}{\partial n} = 0 \quad \text{at boundary}$$
 
 - **解决方案**：
   - 采用 **Kähler-Dirac 费米子** 或 **域墙费米子** 方法。
-  - Kähler-Dirac 方程：$$(d + d^\dagger) \psi = m \psi$$
+  - Kähler-Dirac 方程：
+$$(d + d^\dagger) \psi = m \psi$$
     其中 $d$ 是外微分算子的离散版本。
 
 ### 8.3 引力的量子化困难
@@ -350,8 +354,10 @@ $$\frac{\partial \text{Field}}{\partial n} = 0 \quad \text{at boundary}$$
 
 - **解决方案**：
   - 采用圈量子引力的思想，引入自旋网络和自旋泡沫。
-  - 定义量子几何算子，如面积算子：$$\hat{A} = 8\pi \gamma l_P^2 \sqrt{\hat{J}^2}$$
-    其中 $\gamma$ 是 Immirzi 参数，$\hat{J}^2$ 是角动量算子。
+  - 定义量子几何算子，如面积算子：
+$$\hat{A} = 8\pi \gamma l_P^2 \sqrt{\hat{J}^2}$$
+    其中 $\gamma$ 是 Immirzi 参数，
+$\hat{J}^2$ 是角动量算子。
 
 ### 8.4 洛伦兹不变性的保持
 
@@ -359,8 +365,10 @@ $$\frac{\partial \text{Field}}{\partial n} = 0 \quad \text{at boundary}$$
 
 - **解决方案**：
   - 通过构造对称的格点结构和在连续极限下恢复洛伦兹不变性。
-  - 定义离散版本的 Lorentz 生成元：$$L_{\mu\nu} = n_\mu \partial_\nu - n_\nu \partial_\mu$$
-  - 验证在连续极限下：$$\lim_{\delta x \to 0} [L_{\mu\nu}, \text{Field}] = \text{标准 Lorentz 变换}$$
+  - 定义离散版本的 Lorentz 生成元：
+$$L_{\mu\nu} = n_\mu \partial_\nu - n_\nu \partial_\mu$$
+  - 验证在连续极限下：
+$$\lim_{\delta x \to 0} [L_{\mu\nu}, \text{Field}] = \text{标准 Lorentz 变换}$$
 
 ---
 
@@ -391,7 +399,8 @@ $$\langle O \rangle = \frac{1}{Z} \int \mathcal{D}\phi \mathcal{D}A \mathcal{D}\
 
 - **蒙特卡洛模拟**：采用数值方法模拟场的演化。
 
-  - Metropolis 算法：$$P(\text{accept}) = \min(1, e^{-\Delta S})$$
+  - Metropolis 算法：
+$$P(\text{accept}) = \min(1, e^{-\Delta S})$$
 
 ---
 
@@ -403,12 +412,15 @@ $$\langle O \rangle = \frac{1}{Z} \int \mathcal{D}\phi \mathcal{D}A \mathcal{D}\
 
 - **多尺度建模**：在不同的尺度上采用不同的模型，结合微观和宏观的物理现象。
 
-  - 定义尺度相关的有效理论：$$S_{\text{eff}}[\phi_{\text{low}}] = -\ln \int \mathcal{D}\phi_{\text{high}} \, e^{-S[\phi_{\text{low}}, \phi_{\text{high}}]}$$
+  - 定义尺度相关的有效理论：
+$$S_{\text{eff}}[\phi_{\text{low}}] = -\ln \int \mathcal{D}\phi_{\text{high}} \, e^{-S[\phi_{\text{low}}, \phi_{\text{high}}]}$$
 
 - **与实验的联系**：寻找模型的可观测预言，如对宇宙学常数、引力波或高能物理实验的影响。
 
-  - 预测暗能量密度：$$\rho_{\Lambda} = \frac{\Lambda}{8\pi G}$$
-  - 引力波频谱：$$h(f) = A \cdot f^{-7/6} \cdot \exp(i\Psi(f))$$
+  - 预测暗能量密度：
+$$\rho_{\Lambda} = \frac{\Lambda}{8\pi G}$$
+  - 引力波频谱：
+$$h(f) = A \cdot f^{-7/6} \cdot \exp(i\Psi(f))$$
 
 ---
 
