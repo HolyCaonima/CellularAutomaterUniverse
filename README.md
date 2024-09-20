@@ -15,9 +15,7 @@
 - **空间步长**：
 
   $$
-  
   \delta x = \delta y = \delta z = l_P
-
   $$
 
   即普朗克长度 $l_P$。
