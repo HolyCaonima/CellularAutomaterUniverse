@@ -267,9 +267,7 @@ $i_n$ 表示节点的交叉子。
 $SU(5)$ 或
 $SO(10)$，统一弱、强和电磁相互作用。
 
-- **大统一理论的拉格朗日量**：
-
-$$\mathcal{L}_{GUT} = -\frac{1}{4} F_{\mu\nu}^a F^{a\mu\nu} + i\bar{\psi} \gamma^\mu D_\mu \psi + (D_\mu \phi)^\dagger (D^\mu \phi) - V(\phi)$$
+- **大统一理论的拉格朗日量**：$$\mathcal{L}_{GUT} = -\frac{1}{4} F_{\mu\nu}^a F^{a\mu\nu} + i\bar{\psi} \gamma^\mu D_\mu \psi + (D_\mu \phi)^\dagger (D^\mu \phi) - V(\phi)$$
 
   其中 $F_{\mu\nu}^a$ 是统一规范场的场强张量，$D_\mu$ 是协变导数。
 
