@@ -163,6 +163,7 @@ $$\psi(n + \delta t) = \psi(n) + \delta t \cdot \left( i \gamma^\mu \Delta_\mu \
 
   - **相互作用项**：
 $$\mathcal{L}_{\text{int}} = g \bar{\psi}(n) \gamma^\mu A_\mu(n) \psi(n)$$
+
   - **更新规则中包含相互作用项**：
 $$\psi(n + \delta t) = \psi(n) + \delta t \cdot \left( i \gamma^\mu (\Delta_\mu - ig A_\mu(n)) \psi(n) - m \psi(n) \right)$$
 
