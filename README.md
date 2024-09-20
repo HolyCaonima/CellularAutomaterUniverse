@@ -162,7 +162,7 @@ $$\psi(n + \delta t) = \psi(n) + \delta t \cdot \left( i \gamma^\mu \Delta_\mu \
 - **费米子与规范场的耦合**：
 
   - **相互作用项**：
-$$\mathcal{L}_{\text{int}} = g \bar{\psi}(n) \gamma^\mu A_\mu(n) \psi(n)$$
+$$L_{\text{int}} = g \bar{\psi}(n) \gamma^\mu A_\mu(n) \psi(n)$$
 
   - **更新规则中包含相互作用项**：
 $$\psi(n + \delta t) = \psi(n) + \delta t \cdot \left( i \gamma^\mu (\Delta_\mu - ig A_\mu(n)) \psi(n) - m \psi(n) \right)$$
@@ -191,7 +191,7 @@ $$V(\phi(n)) = \mu^2 \phi^2(n) + \lambda \phi^4(n)$$
 
 - **规范场质量项**：
 
-$$\mathcal{L}_{\text{mass}} = \frac{1}{2} g^2 v^2 A_\mu(n) A^\mu(n)$$
+$$L_{\text{mass}} = \frac{1}{2} g^2 v^2 A_\mu(n) A^\mu(n)$$
 
   其中 $v$ 是希格斯场的真空期望值。
 
@@ -267,7 +267,7 @@ $i_n$ 表示节点的交叉子。
 $SU(5)$ 或
 $SO(10)$，统一弱、强和电磁相互作用。
 
-- **大统一理论的拉格朗日量**：$$\mathcal{L}_{GUT} = -\frac{1}{4} F_{\mu\nu}^a F^{a\mu\nu} + i\bar{\psi} \gamma^\mu D_\mu \psi + (D_\mu \phi)^\dagger (D^\mu \phi) - V(\phi)$$
+- **大统一理论的拉格朗日量**：$$\L_{GUT} = -\frac{1}{4} F_{\mu\nu}^a F^{a\mu\nu} + i\bar{\psi} \gamma^\mu D_\mu \psi + (D_\mu \phi)^\dagger (D^\mu \phi) - V(\phi)$$
 
   其中 $F_{\mu\nu}^a$ 是统一规范场的场强张量，$D_\mu$ 是协变导数。
 
